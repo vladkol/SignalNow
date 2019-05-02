@@ -72,7 +72,6 @@
     "variables": {
       "functionAppName": "[parameters('appName')]",
       "hostingPlanName": "[parameters('appName')]",
-      "applicationInsightsName": "[parameters('appName')]",
       "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'functions')]",
       "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
       "signalrName": "[concat(parameters('appName'), 'signalr')]", 
@@ -140,10 +139,6 @@
                 "value": "8.11.1"
               },
               {
-                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                "value": "[reference(resourceId('microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]"
-              },
-              {
                 "name": "FUNCTIONS_WORKER_RUNTIME",
                 "value": "[variables('functionWorkerRuntime')]"
               }, 
@@ -183,19 +178,6 @@
         "name": "[variables('signalrName')]",
         "apiVersion": "[providers('Microsoft.SignalRService', 'SignalR').apiVersions[0]]",
         "location": "[parameters('location')]"
-      },
-      {
-        "apiVersion": "2015-05-01",
-        "name": "[variables('applicationInsightsName')]",
-        "type": "microsoft.insights/components",
-        "location": "[parameters('location')]",
-        "tags": {
-          "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource"
-        },
-        "properties": {
-          "ApplicationId": "[variables('applicationInsightsName')]",
-          "Request_Source": "IbizaWebAppExtensionCreate"
-        }
       }
     ]
   }
