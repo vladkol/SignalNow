@@ -1,0 +1,7 @@
+{
+    "itemDisplayName": "Create a SignalNow service deployment",
+    "description": "This template creates a new SignalNow service deployment",
+    "summary": "Create an Azure Function app and an Azure SignalR service. The function app is deployed from a Git repo.",
+    "githubUsername": "vladkol",
+    "dateUpdated": "2019-02-12"
+  }
