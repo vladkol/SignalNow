@@ -4,7 +4,7 @@ Deployment
 You can deploy SignalNow as an Azure Function app and Azure SignalR service using this [**ARM Template**](../Azure/Deployment/asuredeploy.json) (azuredeploy.json in Azure/Deployment folder)
 
 ## Deploy to Azure
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Fvladkol%2FSignalNow%2FAzure%2FDeployment%2Fasuredeploy.json) 
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fvladkol%2FSignalNow%2Fmaster%2FAzure%2FDeployment%2Fazuredeploy.json) 
 
 ## Manual deployment
 
