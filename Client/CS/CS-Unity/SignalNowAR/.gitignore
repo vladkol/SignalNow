@@ -15,6 +15,10 @@
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+Assets/WSATestCertificate.pfx
+*.sln
+*.csproj
+
 *_i.c
 *_p.c
 *.ilk
