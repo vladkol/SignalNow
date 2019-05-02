@@ -185,7 +185,7 @@
         "location": "[parameters('location')]"
       },
       {
-        "apiVersion": "2018-05-01-preview",
+        "apiVersion": "2015-05-01",
         "name": "[variables('applicationInsightsName')]",
         "type": "microsoft.insights/components",
         "location": "[parameters('location')]",
