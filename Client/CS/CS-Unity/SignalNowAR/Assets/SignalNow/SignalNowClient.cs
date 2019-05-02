@@ -610,11 +610,13 @@ namespace Microsoft.SignalNow.Client
                         PeerStatus status = (PeerStatus)Enum.Parse(typeof(PeerStatus), messagePayload, true);
                         peers[senderId].Status = status;
                     }
-
-                    Task.Run(()=>
+                    else
                     {
-                        NewMessage?.Invoke(this, senderId, messageType, messagePayload);
-                    });
+                        Task.Run(()=>
+                        {
+                            NewMessage?.Invoke(this, senderId, messageType, messagePayload);
+                        });
+                    }
                 }
             }
 

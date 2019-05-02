@@ -1,7 +1,7 @@
-SignalNow: Serverless Signaling and Real-Time Communication
+SignalNow: Serverless Signaling and Real-Time Messaging
 ===========================================================
 
-SignalNow is a real-time signaling service built with Azure SignalR and Azure Functions. 
+SignalNow is a real-time signaling service built with [Azure SignalR](https://azure.microsoft.com/en-us/services/signalr-service/) and [Azure Functions](https://azure.microsoft.com/en-us/services/functions/). 
 SignalNow key features: 
 1. Serverless. 
 2. Real-time and easily scalable with Azure Functions and SignalR. 
@@ -78,7 +78,7 @@ deprecated)
 [Client SDKs and Samples](Docs/Client%20SDKs%20and%20samples.md)
 
 ## Source code
- 
+
 [**Azure Function app**](Azure/Functions/SignalNow)
 (Azure/Functions/SignalNow folder)
 

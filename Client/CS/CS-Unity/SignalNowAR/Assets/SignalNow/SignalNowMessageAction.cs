@@ -70,7 +70,7 @@ namespace Microsoft.SignalNow.Client
 
         internal Task RunAsync()
         {
-            return Task.Run(Run);
+            return Task.Run(new Action(Run));
         }
 
         void Client_ConnectionChanged(SignalNowClient signalNow, bool connected, Exception ifErrorWhy)
