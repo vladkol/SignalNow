@@ -1,4 +1,4 @@
-SignalNowKey Authentication (to be deprecated)
+SignalNowKey Authentication 
 ===========================================================
 
 A temporary authentication/authorization mechanism based on HMAC-MD5 hashes with

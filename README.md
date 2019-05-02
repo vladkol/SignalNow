@@ -66,8 +66,7 @@ else
 ## Details
 [Serverless Signaling Documentation](Docs/Serverless%20Signaling.md)
 
-[SignalNowKey Authentication](Docs/SignalNowKey%20Authentication.md) (to be
-deprecated)
+[SignalNowKey Authentication](Docs/SignalNowKey%20Authentication.md)
 
 [Signaling Messages](Docs/Signaling%20Messages.md)
 
