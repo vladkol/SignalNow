@@ -11,6 +11,8 @@ SignalNow key features:
 1. [Deploy](Docs/Deployment.md) 
 2. [Use](Docs/Client%20SDKs%20and%20samples.md) (.NET Core 2.2, Unity 2018.3+).
 
+* [Details](#details)
+
 ## Deploy to Azure
 [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fvladkol%2FSignalNow%2Fmaster%2FAzure%2FDeployment%2Fazuredeploy.json)
 
