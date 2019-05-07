@@ -79,7 +79,7 @@ Unity app sends devices poses from the mobile scene to the desktop scene. Signal
 
 Unity and C# clients share the same code. It is relatively complex because higly optimized for sending small messages very frequently (< 30ms) with low latency. 
 
-[**TypeScript (requires changes to make it work again)**](https://realtoinfinityandbeyond.visualstudio.com/CustomRemoteAssist/_git/ReactClientApp)
+[**TypeScript (in development)**]()
 
  
 
