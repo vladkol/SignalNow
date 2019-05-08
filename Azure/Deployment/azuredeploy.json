@@ -106,10 +106,22 @@
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2015-04-01",
       "name": "[variables('hostingPlanName')]",
+      "condition": "[equals(parameters('azureFunctionsPlan'), 'Dynamic')]",
       "location": "[parameters('location')]",
       "properties": {
         "name": "[variables('hostingPlanName')]",
         "computeMode": "Dynamic", 
+        "sku": "Dynamic"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2015-04-01",
+      "name": "[variables('hostingPlanName')]",
+      "condition": "[not(equals(parameters('azureFunctionsPlan'), 'Dynamic'))]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "name": "[variables('hostingPlanName')]",
         "sku": "[substring(parameters('azureFunctionsPlan'), add(indexOf(parameters('azureFunctionsPlan'), '_'), 1))]"
       }
     },
