@@ -1,183 +1,218 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "appName": {
-        "type": "string",
-        "metadata": {
-          "description": "The name of the function SignalNow app that you wish to create."
-        }
-      },
-      "storageAccountType": {
-        "type": "string",
-        "defaultValue": "Standard_LRS",
-        "allowedValues": ["Standard_LRS", "Standard_GRS", "Standard_RAGRS"],
-        "metadata": {
-          "description": "Storage Account type"
-        }
-      },
-      "repoURL": {
-        "type": "string",
-        "defaultValue": "https://github.com/vladkol/SignalNow",
-        "metadata": {
-          "description": "The URL for a Git repository that contains SignalNow code."
-        }
-      },
-      "branch": {
-        "type": "string",
-        "defaultValue": "master",
-        "metadata": {
-          "description": "The branch of the Git repository to use."
-        }
-      },
-      "SignalRSkuName": {
-        "type": "string",
-        "allowedValues": [
-            "Free_DS2",
-            "Basic_DS2"
-        ],
-        "defaultValue": "Basic_DS2",
-        "metadata": {
-            "description": "SignalR Service Sku"
-        }
-    },
-    "signalRTier": {
-        "type": "string",
-        "allowedValues": [
-            "Free",
-            "Basic",
-            "Premium"
-        ],
-        "defaultValue": "Basic",
-        "metadata": {
-            "description": "SignalR Service Tier"
-        }
-    },
-    "signalRCapacity": {
-        "type": "int",
-        "defaultValue": 1,
-        "metadata": {
-            "description": "Nuber of units of the SignalR Service"
-        }
-    },
-    "location": {
-        "type": "string",
-        "defaultValue": "[resourceGroup().location]",
-        "metadata": {
-          "description": "Location for all resources."
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the function SignalNow app that you wish to create."
       }
-      
     },
-    "variables": {
-      "functionAppName": "[parameters('appName')]",
-      "hostingPlanName": "[parameters('appName')]",
-      "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'functions')]",
-      "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-      "signalrName": "[concat(parameters('appName'), 'signalr')]", 
-      "functionWorkerRuntime": "dotnet"
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": ["Standard_LRS", "Standard_GRS", "Standard_RAGRS"],
+      "metadata": {
+        "description": "Storage Account type"
+      }
     },
-    "resources": [
-      {
-        "type": "Microsoft.Storage/storageAccounts",
-        "sku": {
-          "name": "[parameters('storageAccountType')]"
-        },
-        "kind": "Storage",
-        "name": "[variables('storageAccountName')]",
-        "apiVersion": "2016-12-01",
-        "location": "[parameters('location')]"
+    "repoURL": {
+      "type": "string",
+      "defaultValue": "https://github.com/vladkol/SignalNow",
+      "metadata": {
+        "description": "The URL for a Git repository that contains SignalNow code."
+      }
+    },
+    "branch": {
+      "type": "string",
+      "defaultValue": "master",
+      "metadata": {
+        "description": "The branch of the Git repository to use."
+      }
+    },
+    "SignalRSkuName": {
+      "type": "string",
+      "allowedValues": [
+          "Free_DS2",
+          "Basic_DS2"
+      ],
+      "defaultValue": "Basic_DS2",
+      "metadata": {
+          "description": "SignalR Service Sku"
+      }
+  },
+  "signalRTier": {
+      "type": "string",
+      "allowedValues": [
+          "Free",
+          "Basic",
+          "Premium"
+      ],
+      "defaultValue": "Basic",
+      "metadata": {
+          "description": "SignalR Service Tier"
+      }
+  },
+  "signalRCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+          "description": "Nuber of units of the SignalR Service"
+      }
+  },
+  "azureFunctionsPlan":
+  {
+    "type": "string", 
+    "allowedValues": [
+        "Dynamic", 
+        "Premium_EP1", 
+        "Premium_EP2", 
+        "Premium_EP3"
+    ], 
+    "defaultValue": "Dynamic",
+    "metadata": {
+      "metadata": "Azure Functions Plan" 
+    }
+  },
+  "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    }
+    
+  },
+  "variables": {
+    "functionAppName": "[parameters('appName')]",
+    "hostingPlanName": "[parameters('appName')]",
+    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'functions')]",
+    "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+    "signalrName": "[concat(parameters('appName'), 'signalr')]", 
+    "serverFarmNameRef" : "[if(equals(parameters('azureFunctionsPlan'), 'Dynamic'), concat(variables('hostingPlanName'), '-dynamic'), concat(variables('hostingPlanName'), '-premium'))]",
+    "serverFarmPlanSKU" : "[substring(parameters('azureFunctionsPlan'), add(indexOf(parameters('azureFunctionsPlan'), '_'), 1))]",
+    "functionWorkerRuntime": "dotnet"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "[parameters('storageAccountType')]"
       },
-      {
-        "type": "Microsoft.Web/serverfarms",
-        "apiVersion": "2015-04-01",
-        "name": "[variables('hostingPlanName')]",
-        "location": "[parameters('location')]",
-        "properties": {
-          "name": "[variables('hostingPlanName')]",
-          "computeMode": "Dynamic",
-          "sku": "Dynamic"
-        }
+      "kind": "Storage",
+      "name": "[variables('storageAccountName')]",
+      "apiVersion": "2016-12-01",
+      "location": "[parameters('location')]"
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2015-04-01",
+      "name": "[concat(variables('hostingPlanName'), '-dynamic')]",
+      "condition": "[equals(parameters('azureFunctionsPlan'), 'Dynamic')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "name": "[concat(variables('hostingPlanName'), '-dynamic')]",
+        "computeMode": "Dynamic", 
+        "sku": "Dynamic"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2016-09-01",
+      "name": "[concat(variables('hostingPlanName'), '-premium')]",
+      "condition": "[not(equals(parameters('azureFunctionsPlan'), 'Dynamic'))]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[variables('serverFarmPlanSKU')]",
+        "tier": "ElasticPremium",
+        "size": "[variables('serverFarmPlanSKU')]",
+        "family": "EP",
+        "capacity": 1
       },
-      {
-        "apiVersion": "2015-08-01",
-        "type": "Microsoft.Web/sites",
-        "name": "[variables('functionAppName')]",
-        "location": "[parameters('location')]",
-        "kind": "functionapp",
-        "dependsOn": [
-          "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
-          "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]", 
-          "[resourceId('Microsoft.SignalRService/SignalR', variables('signalrName'))]"
-        ],
-        "properties": {
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
-          "siteConfig": {
-            "appSettings": [
-              {
-                "name": "AzureWebJobsDashboard",
-                "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
-              },
-              {
-                "name": "AzureWebJobsStorage",
-                "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
-              },
-              {
-                "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
-              },
-              {
-                "name": "WEBSITE_CONTENTSHARE",
-                "value": "[toLower(variables('functionAppName'))]"
-              },
-              {
-                "name": "FUNCTIONS_EXTENSION_VERSION",
-                "value": "~2"
-              },
-              {
-                "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                "value": "8.11.1"
-              },
-              {
-                "name": "FUNCTIONS_WORKER_RUNTIME",
-                "value": "[variables('functionWorkerRuntime')]"
-              }, 
-              {
-                "name": "AzureSignalRConnectionString",
-                "value": "[concat('Endpoint=https://', variables('signalrName'), '.service.signalr.net;AccountKey=', listKeys(variables('signalrName'), providers('Microsoft.SignalRService', 'SignalR').apiVersions[0]).primaryKey)]"
-              }
-            ]
-          }
-        },
-        "resources": [
-          {
-            "apiVersion": "2015-08-01",
-            "name": "web",
-            "type": "sourcecontrols",
-            "dependsOn": [
-              "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]"
-            ],
-            "properties": {
-              "RepoUrl": "[parameters('repoURL')]",
-              "branch": "[parameters('branch')]",
-              "isManualIntegration": true
+      "kind": "elastic",
+      "properties": {
+        "name": "[concat(variables('hostingPlanName'), '-premium')]"
+      }
+    },
+    {
+      "apiVersion": "2015-08-01",
+      "type": "Microsoft.Web/sites",
+      "name": "[variables('functionAppName')]",
+      "location": "[parameters('location')]",
+      "kind": "functionapp",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('serverFarmNameRef'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]", 
+        "[resourceId('Microsoft.SignalRService/SignalR', variables('signalrName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('serverFarmNameRef'))]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "AzureWebJobsDashboard",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+            },
+            {
+              "name": "AzureWebJobsStorage",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+            },
+            {
+              "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+            },
+            {
+              "name": "WEBSITE_CONTENTSHARE",
+              "value": "[toLower(variables('functionAppName'))]"
+            },
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~2"
+            },
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "8.11.1"
+            },
+            {
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "[variables('functionWorkerRuntime')]"
+            }, 
+            {
+              "name": "AzureSignalRConnectionString",
+              "value": "[concat('Endpoint=https://', variables('signalrName'), '.service.signalr.net;AccountKey=', listKeys(variables('signalrName'), providers('Microsoft.SignalRService', 'SignalR').apiVersions[0]).primaryKey)]"
             }
-          }
-        ]
+          ]
+        }
       },
-      {
-        "type": "Microsoft.SignalRService/SignalR",
-        "properties": {
-            "domainLabel": "[variables('signalrName')]"
-        },
-        "sku": {
-            "name": "[parameters('SignalRSkuName')]",
-            "tier": "[parameters('signalRTier')]",
-            "capacity": "[parameters('signalRCapacity')]"
-        },
-        "name": "[variables('signalrName')]",
-        "apiVersion": "[providers('Microsoft.SignalRService', 'SignalR').apiVersions[0]]",
-        "location": "[parameters('location')]"
-      }
-    ]
-  }
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('repoURL')]",
+            "branch": "[parameters('branch')]",
+            "isManualIntegration": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.SignalRService/SignalR",
+      "properties": {
+          "domainLabel": "[variables('signalrName')]"
+      },
+      "sku": {
+          "name": "[parameters('SignalRSkuName')]",
+          "tier": "[parameters('signalRTier')]",
+          "capacity": "[parameters('signalRCapacity')]"
+      },
+      "name": "[variables('signalrName')]",
+      "apiVersion": "[providers('Microsoft.SignalRService', 'SignalR').apiVersions[0]]",
+      "location": "[parameters('location')]"
+    }
+  ]
+}
