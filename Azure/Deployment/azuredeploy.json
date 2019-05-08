@@ -90,6 +90,7 @@
     "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
     "signalrName": "[concat(parameters('appName'), 'signalr')]", 
     "serverFarmNameRef" : "[if(equals(parameters('azureFunctionsPlan'), 'Dynamic'), concat(variables('hostingPlanName'), '-dynamic'), concat(variables('hostingPlanName'), '-premium'))]",
+    "serverFarmPlanSKU" : "[substring(parameters('azureFunctionsPlan'), add(indexOf(parameters('azureFunctionsPlan'), '_'), 1))]",
     "functionWorkerRuntime": "dotnet"
   },
   "resources": [
@@ -117,13 +118,20 @@
     },
     {
       "type": "Microsoft.Web/serverfarms",
-      "apiVersion": "2015-04-01",
+      "apiVersion": "2016-09-01",
       "name": "[concat(variables('hostingPlanName'), '-premium')]",
       "condition": "[not(equals(parameters('azureFunctionsPlan'), 'Dynamic'))]",
       "location": "[parameters('location')]",
+      "sku": {
+        "name": "[variables('serverFarmPlanSKU')]",
+        "tier": "ElasticPremium",
+        "size": "[variables('serverFarmPlanSKU')]",
+        "family": "EP",
+        "capacity": 1
+      },
+      "kind": "elastic",
       "properties": {
-        "name": "[concat(variables('hostingPlanName'), '-premium')]",
-        "sku": "[substring(parameters('azureFunctionsPlan'), add(indexOf(parameters('azureFunctionsPlan'), '_'), 1))]"
+        "name": "[concat(variables('hostingPlanName'), '-premium')]"
       }
     },
     {
