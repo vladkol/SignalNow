@@ -109,7 +109,7 @@
       "location": "[parameters('location')]",
       "properties": {
         "name": "[variables('hostingPlanName')]",
-        "computeMode": "[if(equals(parameters('azureFunctionsPlan'), 'Dynamic'), 'Dynamic', json('null'))]", 
+        "computeMode": "Dynamic", 
         "sku": "[substring(parameters('azureFunctionsPlan'), add(indexOf(parameters('azureFunctionsPlan'), '_'), 1))]"
       }
     },
