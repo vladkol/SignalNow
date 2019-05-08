@@ -62,30 +62,14 @@
   },
   "azureFunctionsPlan":
   {
-    "type": "object", 
+    "type": "string", 
     "allowedValues": [
-      {
-        "name": "Dynamic", 
-        "sku": "Dynamic"
-      },
-      {
-        "name": "Premium EP1", 
-        "sku": "EP1"
-      },
-      {
-        "name": "Premium EP2", 
-        "sku": "EP2"
-      },
-      {
-        "name": "Premium EP3", 
-        "sku": "EP3"
-      }
+        "Dynamic", 
+        "Premium_EP1", 
+        "Premium_EP2", 
+        "Premium_EP3"
     ], 
-    "defaultValue": 
-    {
-      "name": "Dynamic", 
-      "sku": "Dynamic"
-    },
+    "defaultValue": "Dynamic",
     "metadata": {
       "metadata": "Azure Functions Plan" 
     }
@@ -126,7 +110,7 @@
       "properties": {
         "name": "[variables('hostingPlanName')]",
         "computeMode": "[if(equals(parameters('azureFunctionsPlan'), 'Dynamic'), 'Dynamic', json('null'))]", 
-        "sku": "[parameters('azureFunctionsPlan').sku]"
+        "sku": "[substring(parameters('azureFunctionsPlan'), indexOf(parameters('azureFunctionsPlan'), '_') + 1)]"
       }
     },
     {
