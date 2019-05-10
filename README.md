@@ -83,7 +83,7 @@ else
 [**Azure Function app**](Azure/Functions/SignalNow)
 (Azure/Functions/SignalNow folder)
 
-[**ARM Template**](Azure/Deployment/asuredeploy.json)
+[**ARM Template**](Azure/Deployment/azuredeploy.json)
 
 [**.NET Core 2.2 Client and demo app**](Client/CS/CS-Sample)
 (Client/CS/CS-Sample folder)
