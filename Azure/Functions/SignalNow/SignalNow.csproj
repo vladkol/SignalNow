@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.24" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
     <PackageReference Include="System.Net.Http.WinHttpHandler" Version="4.5.2" />
+    <PackageReference Include="GraphQL.Client" Version="1.0.3"/>
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -30,5 +31,6 @@
     <Content Include="Auth\AuthenticateSignalNowKey.cs" />
     <Content Include="GenerateSignalNowKey" />
     <Content Include="GenerateSignalNowKey.cs" />
+    <Content Include="Auth\AuthenticateGitHub.cs" />
   </ItemGroup>
 </Project>

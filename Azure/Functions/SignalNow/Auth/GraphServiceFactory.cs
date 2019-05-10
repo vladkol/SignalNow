@@ -35,6 +35,8 @@ namespace Microsoft.SignalNow
                 case "graph.microsoft.com":
                 case "teams.microsoft.com":
                     return new AuthenticateAAD();
+                case "github.com":
+                    return new AuthenticateGitHub();
                 case "signalnowkey":
                     return new AuthenticateSignalNowKey();
                 default:

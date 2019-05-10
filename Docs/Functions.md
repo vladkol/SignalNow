@@ -17,8 +17,7 @@ Negotiate function (HTTP call) checks if a provided user is a member of a provid
 
 *Function input (all - request headers):*
 
--   **authServiceName** - Authentication and people graph service, e.g. 'graph.microsoft.com' or 'github.com' (github.com is not implemented yet).
-    '[signalnowkey](SignalNowKey%20Authentication.md)'.
+-   **authServiceName** - Authentication and people graph service, e.g. 'graph.microsoft.com' or 'github.com' or  '[signalnowkey](SignalNowKey%20Authentication.md)'.
 
 -   **companyName** - Company name, company id or tenant id, e.g. 'microsoft' or '72f988bf-86f1-41af-91ab-2d7cd011db47'.
 

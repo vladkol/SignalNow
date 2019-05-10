@@ -21,10 +21,10 @@ namespace Microsoft.SignalNow
         public async Task<GraphAuthStatus> IsGroupMember(string userName, string companyOrTenant, string groupOrTeam, string authToken, ILogger log = null)
         {
             if(string.IsNullOrEmpty(userName) 
-            || string.IsNullOrEmpty(groupOrTeam)
+            || string.IsNullOrEmpty(companyOrTenant) 
             || string.IsNullOrEmpty(authToken))
             {
-                log.LogError($"Invalid userName, company or group name");
+                log.LogError($"Invalid userName, company or authentication token");
                 return GraphAuthStatus.InvalidName;
             }
 
@@ -37,7 +37,7 @@ namespace Microsoft.SignalNow
             }
 
             // If group doesn't matter we only check authentication status in AAD tenant 
-            if(groupOrTeam == "*")
+            if(groupOrTeam == "" || groupOrTeam == "*")
             {
                 return GraphAuthStatus.OK;
             }
