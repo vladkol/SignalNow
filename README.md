@@ -5,7 +5,7 @@ SignalNow is a real-time signaling service built with [Azure SignalR](https://az
 SignalNow key features: 
 1. Serverless. 
 2. Real-time and easily scalable with Azure Functions and SignalR. 
-3. Extensible authentication with integrated authentication using [Microsoft Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/), [Microsoft Accounts](https://account.microsoft.com), GitHub accounts, as well as key-based mechanism.
+3. Extensible authentication with integrated authentication using [Microsoft Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/), [Microsoft Accounts](https://account.microsoft.com), [GitHub accounts](https://developer.github.com/v3/guides/basics-of-authentication/), as well as key-based mechanism.
 
 ## How to get started
 1. [Deploy](Docs/Deployment.md) 
