@@ -467,6 +467,7 @@ namespace Microsoft.SignalNow.Client
             if(connection != null && connection.State == HubConnectionState.Connected)
             {
                 SendMessageToAll("I_AM_OUTTA_HERE", string.Empty, true).Wait(1000);
+
                 disconnecting = true;
                 disconnectingCancel.Cancel();
 #if !UNITY_2018_3_OR_NEWER
@@ -507,7 +508,7 @@ namespace Microsoft.SignalNow.Client
         }
 #pragma warning restore 1998
 
-        internal async Task<bool> SendImportantMessage(string receiverId, bool isToGroup, string messageType, string payload, bool isPayloadJson)
+        public async Task<bool> SendImportantMessage(string receiverId, bool isToGroup, string messageType, string payload, bool isPayloadJson)
         {
             bool ok = false;
             for(int i=0; i < importantMessageTries; i++)
