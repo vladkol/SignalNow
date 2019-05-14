@@ -21,10 +21,10 @@ namespace Microsoft.SignalNow
         public async Task<GraphAuthStatus> IsGroupMember(string userName, string companyOrTenant, string groupOrTeam, string authToken, ILogger log = null)
         {
             if(string.IsNullOrEmpty(userName) 
-            || string.IsNullOrEmpty(companyOrTenant) 
+            || string.IsNullOrEmpty(groupOrTeam)
             || string.IsNullOrEmpty(authToken))
             {
-                log.LogError($"Invalid userName, company or authentication token");
+                log.LogError($"Invalid userName, company or group name");
                 return GraphAuthStatus.InvalidName;
             }
 
@@ -37,7 +37,7 @@ namespace Microsoft.SignalNow
             }
 
             // If group doesn't matter we only check authentication status in AAD tenant 
-            if(groupOrTeam == "" || groupOrTeam == "*")
+            if(groupOrTeam == "*")
             {
                 return GraphAuthStatus.OK;
             }
@@ -92,15 +92,20 @@ namespace Microsoft.SignalNow
                 if(!string.IsNullOrEmpty(responseJson))
                 {
                     dynamic res = JsonConvert.DeserializeObject(responseJson);
-                    string mail = res.userPrincipalName;
+                    string upn = res.userPrincipalName;
+                    string mail = res.mail;
                 
-                    if(string.Equals(mail, userPrincipalName, StringComparison.InvariantCultureIgnoreCase))
+                    if(string.Equals(upn, userPrincipalName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        resStatus =  System.Net.HttpStatusCode.OK;
+                    }
+                    else if(mail != null && string.Equals(mail, userPrincipalName, StringComparison.InvariantCultureIgnoreCase))
                     {
                         resStatus =  System.Net.HttpStatusCode.OK;
                     }
                     else if(log != null)
                     {
-                        log.LogError($"Bearer token is for {mail}, expected to be for {userPrincipalName}");
+                        log.LogError($"Bearer token is for {upn}, expected to be for {userPrincipalName}");
                     }
                 }
                 else if(log != null)
