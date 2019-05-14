@@ -17,14 +17,13 @@ Negotiate function (HTTP call) checks if a provided user is a member of a provid
 
 *Function input (all - request headers):*
 
--   **authServiceName** - Authentication and people graph service, e.g. 'graph.microsoft.com' or 'github.com' (github.com is not implemented yet).
-    '[signalnowkey](SignalNowKey%20Authentication.md)'.
+-   **authServiceName** - Authentication and people graph service, e.g. 'graph.microsoft.com' or 'github.com' or  '[signalnowkey](SignalNowKey%20Authentication.md)'.
 
--   **companyName** - Company name, company id or tenant id, e.g. 'microsoft' or '72f988bf-86f1-41af-91ab-2d7cd011db47'.
+-   **companyName** - Company name, company id or tenant id, e.g. 'microsoft' or '72f988bf-86f1-41af-91ab-2d7cd011db47'. It must be a tenant id for Microsoft Graph, an organization name for GitHub 
 
--   **teamName** - Team name or team id, e.g. 'MyTeam' or '11244a09-ff97-4178-9635-4ca38dfb1015'. May also be a 'room name' for room-oriented scenarios (still requires a group id for AAD). If you don't want to limit it to a specific group, provide **'*'** (a star) instead. 
+-   **teamName** - Team name or team id, e.g. 'MyTeam' or '11244a09-ff97-4178-9635-4ca38dfb1015'. May also be a 'room name' for room-oriented scenarios. It must be a group id for Microsoft Graph, team name for GitHub. If you don't want to limit it to a specific group, provide **'*'** (a star) instead. 
 
--   **userName** - User name, e.g. 'vlad' or 'vlad@microsoft.com'. It must be user's principal name (userPrincipalName) for AAD/Microsoft Graph
+-   **userName** - User name, e.g. 'vlad' or 'vlad@microsoft.com'. It must be user's principal name (userPrincipalName) for Microsoft Graph, user name for GitHub 
 
 -   **deviceId** - Device id (MAC address or a GUID expected)
 

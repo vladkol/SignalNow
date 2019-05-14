@@ -92,15 +92,20 @@ namespace Microsoft.SignalNow
                 if(!string.IsNullOrEmpty(responseJson))
                 {
                     dynamic res = JsonConvert.DeserializeObject(responseJson);
-                    string mail = res.userPrincipalName;
+                    string upn = res.userPrincipalName;
+                    string mail = res.mail;
                 
-                    if(string.Equals(mail, userPrincipalName, StringComparison.InvariantCultureIgnoreCase))
+                    if(string.Equals(upn, userPrincipalName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        resStatus =  System.Net.HttpStatusCode.OK;
+                    }
+                    else if(mail != null && string.Equals(mail, userPrincipalName, StringComparison.InvariantCultureIgnoreCase))
                     {
                         resStatus =  System.Net.HttpStatusCode.OK;
                     }
                     else if(log != null)
                     {
-                        log.LogError($"Bearer token is for {mail}, expected to be for {userPrincipalName}");
+                        log.LogError($"Bearer token is for {upn}, expected to be for {userPrincipalName}");
                     }
                 }
                 else if(log != null)

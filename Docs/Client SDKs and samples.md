@@ -8,10 +8,10 @@ Client SDKs and samples
 using System;
 using Microsoft.SignalNow.Client;
 
-string graphName = "signalnowkey"; // Use "graph.microsoft.com" for Azure Active Directory (AAD) and Microsoft Graph 
-string userName = "vlad"; // or "vladkol@microsoft.com" for AAD 
-string company = "microsoft"; // or MSFT AAD Tenant Id 
-string team = "cse"; // or any AAD group id, or * for not limiting it to a specific group 
+string graphName = "signalnowkey"; // Use "graph.microsoft.com" for Azure Active Directory (AAD) and Microsoft Graph, or "github.com" for GitHub  
+string userName = "vlad"; // or "vladkol@microsoft.com" for AAD, or "vladkol" for GitHub 
+string company = "microsoft"; // or MSFT AAD Tenant Id, or GitHub organization name
+string team = "cse"; // or any AAD group id, or GitHub team name, or * for not limiting it to a specific group
 string deviceId = Guid.NewGuid().ToString(); // May be device's MAC address 
 
 // If Azure Active Directory used, the authenticating app should have permissions sufficient for calling checkMemberGroups API 

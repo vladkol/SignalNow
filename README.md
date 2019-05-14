@@ -5,7 +5,7 @@ SignalNow is a real-time signaling service built with [Azure SignalR](https://az
 SignalNow key features: 
 1. Serverless. 
 2. Real-time and easily scalable with Azure Functions and SignalR. 
-3. Extensible authentication with integrated authentication using [Microsoft Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/) and [Microsoft Accounts](https://account.microsoft.com) as well as key-based mechanism.
+3. Extensible authentication with integrated authentication using [Microsoft Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/), [Microsoft Accounts](https://account.microsoft.com), [GitHub accounts](https://developer.github.com/v3/guides/basics-of-authentication/), as well as key-based mechanism.
 
 ## How to get started
 1. [Deploy](Docs/Deployment.md) 
@@ -21,10 +21,10 @@ SignalNow key features:
 using System; 
 using Microsoft.SignalNow.Client;
 
-string graphName = "signalnowkey"; // Use "graph.microsoft.com" for Azure Active Directory (AAD) and Microsoft Graph 
-string userName = "vlad"; // or "vladkol@microsoft.com" for AAD 
-string company = "microsoft"; // or MSFT AAD Tenant Id 
-string team = "cse"; // or any AAD group id  
+string graphName = "signalnowkey"; // Use "graph.microsoft.com" for Azure Active Directory (AAD) and Microsoft Graph, or "github.com" for GitHub  
+string userName = "vlad"; // or "vladkol@microsoft.com" for AAD, or "vladkol" for GitHub 
+string company = "microsoft"; // or MSFT AAD Tenant Id, or GitHub organization name
+string team = "cse"; // or any AAD group id, or GitHub team name, or * for not limiting it to a specific group
 string deviceId = Guid.NewGuid().ToString(); // May be device's MAC address 
 
 // If Azure Active Directory used, the authenticating app should have permissions sufficient for calling checkMemberGroups API 
@@ -91,3 +91,13 @@ else
 [**Unity 2018.3 app**](Client/CS/CS-Unity/SignalNowAR)
 *(Scripting Runtime .NET 4.x, both with .NET Standard 2.0 and .NET 4.x compatibility levels, works on iOS, Android, WinDesktop, UWP, MacOS*, 
 Client/CS/CS-Unity/SignalNowAR folder)
+
+# Contributing
+
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+the rights to use your contribution. For details, visit https://cla.microsoft.com.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
