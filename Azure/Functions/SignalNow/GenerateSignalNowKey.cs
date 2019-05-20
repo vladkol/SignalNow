@@ -26,7 +26,6 @@ namespace Microsoft.SignalNow
                 return await Task<IAsyncResult>.Run(()=>
                 {
                     var signalRConnection = ConfigUtils.GetSignalRConnection();
-                    log.LogInformation($"Generating a key with conection as {signalRConnection}");
                     ServiceUtils utils = new ServiceUtils(signalRConnection);
                     string key = utils.AccessKey;
 
