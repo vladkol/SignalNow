@@ -60,11 +60,12 @@ public class SignalNowManager : MonoBehaviour
 
     public bool autoStart = false;
 
-    public string graphName = "signalnowkey";
-    public string userName = "vlad";
-    public string company = "microsoft";
-    public string team = "cse";
-    public string authKey = "u_7c964ca6a3a45adf1e7bddc67fedcbccu_5cb4a8e010044872d0e156ce628eccb2";
+    public string signalNowServer;
+    public string graphName;
+    public string userName;
+    public string company;
+    public string team;
+    public string authKey;
 
     [Range(10, 1000)]
     public uint updateTimeThresholdInMS = 25;
@@ -134,7 +135,7 @@ public class SignalNowManager : MonoBehaviour
             Disconnect();
             client = null;
         }
-        client = new Microsoft.SignalNow.Client.SignalNowClient("signalnowwestus2", 0, maxSimultaneousRequests);
+        client = new Microsoft.SignalNow.Client.SignalNowClient(signalNowServer, 0, maxSimultaneousRequests);
         client.NewMessage += Client_NewMessage;
         client.RequestFailed += Client_RequestFailed;
         client.ConnectionChanged += Client_ConnectionChanged;
