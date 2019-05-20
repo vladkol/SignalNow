@@ -1184,12 +1184,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoStart: 0
-  signalNowServer: signalnowwestus2
+  signalNowServer: signalnow-we
   graphName: signalnowkey
   userName: vlad
   company: microsoft
   team: cse
-  authKey: u_7c964ca6a3a45adf1e7bddc67fedcbccu_5cb4a8e010044872d0e156ce628eccb2
+  authKey: u_f195456d1860a31f254aaa4d8e1b2a25u_7df84cf920398ad5f3b6134d491436a6
   updateTimeThresholdInMS: 30
   maxSimultaneousRequests: 4
 --- !u!4 &1280228535
