@@ -33,10 +33,10 @@
     "SignalRSkuName": {
       "type": "string",
       "allowedValues": [
-          "Free_DS2",
-          "Basic_DS2"
+          "Free_F1",
+          "Standard_S1"
       ],
-      "defaultValue": "Basic_DS2",
+      "defaultValue": "Standard_S1",
       "metadata": {
           "description": "SignalR Service Sku"
       }
@@ -45,10 +45,10 @@
       "type": "string",
       "allowedValues": [
           "Free",
-          "Basic",
+          "Standard",
           "Premium"
       ],
-      "defaultValue": "Basic",
+      "defaultValue": "Standard",
       "metadata": {
           "description": "SignalR Service Tier"
       }
@@ -202,6 +202,7 @@
     },
     {
       "type": "Microsoft.SignalRService/SignalR",
+      "apiVersion": "2018-10-01", 
       "properties": {
           "domainLabel": "[variables('signalrName')]"
       },
@@ -211,7 +212,6 @@
           "capacity": "[parameters('signalRCapacity')]"
       },
       "name": "[variables('signalrName')]",
-      "apiVersion": "[providers('Microsoft.SignalRService', 'SignalR').apiVersions[0]]",
       "location": "[parameters('location')]"
     }
   ]
