@@ -16,7 +16,7 @@ namespace SignalNowTest
         private static string userName = "vlad";
         private static string company = "microsoft";
         private static string team = "cse";
-        private static string auth = "u_7c964ca6a3a45adf1e7bddc67fedcbccu_5cb4a8e010044872d0e156ce628eccb2";
+        private static string auth = "u_f195456d1860a31f254aaa4d8e1b2a25u_7df84cf920398ad5f3b6134d491436a6";
         private static string hostName = System.Net.Dns.GetHostName();
 
         static void Main(string[] args)
@@ -24,7 +24,7 @@ namespace SignalNowTest
             Run().Wait();
         }
 
-        static SignalNowClient client = new SignalNowClient("signalnowwestus2");
+        static SignalNowClient client = new SignalNowClient("signalnow-we");
         static Timer statusTimer;
         static Timer sendTimer;
         private static bool dataReadyState = false;
