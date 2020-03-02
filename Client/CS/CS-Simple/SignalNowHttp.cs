@@ -15,8 +15,8 @@ namespace Microsoft.SignalNow.Client
     {
         private static readonly TimeSpan clientRenewalTimeout = TimeSpan.FromSeconds(10);
         private static readonly TimeSpan disposeWaitingTime = TimeSpan.FromMilliseconds(500);
-        private static readonly long httpRequestsBeforeReseed = 3000;
-        private static readonly TimeSpan lifeTimeBeforeReseed = TimeSpan.FromMinutes(1);
+        private static readonly long httpRequestsBeforeReseed = 3000; // set to long.MaxValue for ignoring number of requests
+        private static readonly TimeSpan lifeTimeBeforeReseed = TimeSpan.FromMinutes(3); // up to 230 seconds for Azure Front Door
 
         protected class SignalNowHttpClientInternal : IDisposable
         {
