@@ -167,7 +167,7 @@
             },
             {
               "name": "FUNCTIONS_EXTENSION_VERSION",
-              "value": "~2"
+              "value": "~3"
             },
             {
               "name": "WEBSITE_NODE_DEFAULT_VERSION",
@@ -204,7 +204,14 @@
       "type": "Microsoft.SignalRService/SignalR",
       "apiVersion": "2018-10-01", 
       "properties": {
-          "domainLabel": "[variables('signalrName')]"
+          "domainLabel": "[variables('signalrName')]",
+          "features": [
+          {
+            "flag": "ServiceMode",
+            "value": "Serverless",
+            "properties": {}
+          }
+        ]
       },
       "sku": {
           "name": "[parameters('SignalRSkuName')]",

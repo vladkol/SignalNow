@@ -13,8 +13,8 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Web;
 using System.Net;
+using MessagePack;
 
 namespace Microsoft.SignalNow
 {
@@ -60,10 +60,9 @@ namespace Microsoft.SignalNow
                     {
                         await req.Body.CopyToAsync(ms);
                         byte[] messageData = ms.ToArray();
-
                         payload = useLZ ? 
-                                        MessagePack.LZ4MessagePackSerializer.ToJson(messageData)
-                                        : MessagePack.MessagePackSerializer.ToJson(messageData);
+                                        MessagePack.MessagePackSerializer.SerializeToJson(messageData, MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray))
+                                        : MessagePack.MessagePackSerializer.SerializeToJson(messageData, MessagePackSerializerOptions.Standard);
                     }
                 }
                 else

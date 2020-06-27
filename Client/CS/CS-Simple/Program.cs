@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.SignalNow.Client;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace SignalNowTest
 {
@@ -16,7 +14,7 @@ namespace SignalNowTest
         private static string userName = "vlad";
         private static string company = "microsoft";
         private static string team = "cse";
-        private static string auth = "u_7c964ca6a3a45adf1e7bddc67fedcbccu_5cb4a8e010044872d0e156ce628eccb2";
+        private static string auth = "u_5168e616c3c142cd25670edf7f83d299u_a8cf3dd8329bf9a0b9b789e1475fa868";
         private static string hostName = System.Net.Dns.GetHostName();
 
         static void Main(string[] args)
@@ -24,7 +22,7 @@ namespace SignalNowTest
             Run().Wait();
         }
 
-        static SignalNowClient client = new SignalNowClient("signalnowwestus2");
+        static SignalNowClient client = new SignalNowClient("mysignalnowapp");
         static Timer statusTimer;
         static Timer sendTimer;
         private static bool dataReadyState = false;

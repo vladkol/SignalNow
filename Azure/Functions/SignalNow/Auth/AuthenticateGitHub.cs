@@ -2,18 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web;
-using System.Dynamic;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using GraphQL.Client;
-using GraphQL.Common.Request;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.Newtonsoft;
+using GraphQL;
 
 namespace Microsoft.SignalNow
 {
@@ -21,7 +14,7 @@ namespace Microsoft.SignalNow
     {
         public async Task<GraphAuthStatus> IsGroupMember(string userName, string companyOrTenant, string groupOrTeam, string authToken, ILogger log = null)
         {
-            // authToken should be aquired with read:org scope included 
+            // authToken should be acquired with read:org scope included 
 
             if(string.IsNullOrEmpty(userName) 
             || string.IsNullOrEmpty(companyOrTenant) 
@@ -33,13 +26,13 @@ namespace Microsoft.SignalNow
 
             bool isMember = false;
 
-            using (var client = new GraphQLClient("https://api.github.com/graphql"))
+            using (var client = new GraphQLHttpClient("https://api.github.com/graphql", new NewtonsoftJsonSerializer()))
             {
                 bool isPersonalToken = authToken.StartsWith(":");
                 string authTokenType = isPersonalToken ? "token" : "bearer";
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(authTokenType, 
+                client.HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(authTokenType, 
                                                 isPersonalToken ? authToken.Substring(1) : authToken);
-                client.DefaultRequestHeaders.Add("User-Agent", "SignalNow");
+                client.HttpClient.DefaultRequestHeaders.Add("User-Agent", "SignalNow");
 
                 var userLoginRequest = new GraphQLRequest
                 {
@@ -54,7 +47,7 @@ namespace Microsoft.SignalNow
                 string githubLogin = string.Empty;
                 try
                 {
-                    var userResult = await client.PostAsync(userLoginRequest);
+                    var userResult = await client.SendQueryAsync<dynamic>(userLoginRequest);
                     if (userResult.Errors != null && userResult.Errors.Length > 0)
                     {
                         log.LogError($"Token verification failed: {userResult.Errors[0].Message}");
@@ -90,7 +83,7 @@ namespace Microsoft.SignalNow
 
                     try
                     {
-                        var orgResult = await client.PostAsync(orgMembersRequest);
+                        var orgResult = await client.SendQueryAsync<dynamic>(orgMembersRequest);
                         if (orgResult.Errors != null && orgResult.Errors.Length > 0)
                         {
                             log.LogError($"Organization membership verification failed: {orgResult.Errors[0].Message}");
@@ -130,7 +123,7 @@ namespace Microsoft.SignalNow
 
                     try
                     {
-                        var teamResult = await client.PostAsync(teamMembersRequest);
+                        var teamResult = await client.SendQueryAsync<dynamic>(teamMembersRequest);
 
                         if (teamResult.Errors != null && teamResult.Errors.Length > 0)
                         {
